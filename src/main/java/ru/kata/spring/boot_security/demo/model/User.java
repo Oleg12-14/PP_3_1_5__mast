@@ -24,25 +24,25 @@ public class User implements UserDetails {
     private long id;
 
     @Column(name = "username")
-    @Size(min=2, message = "Не меньше 5 знаков")
-    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Логин не должен содержать цифры, пробелы, спецсимволы")
+    //@Size(min=2, message = "Не меньше 5 знаков")
+   // @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Логин не должен содержать цифры, пробелы, спецсимволы")
     private String username;
 
     @Column(name = "name")
-    @Size(min = 2, message = "Имя должно содержать как минимум 2 символа.")
-    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Имя не должно содержать цифры, пробелы, спецсимволы")
+    //@Size(min = 2, message = "Имя должно содержать как минимум 2 символа.")
+   //@Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Имя не должно содержать цифры, пробелы, спецсимволы")
     private String name;
 
     @Column(name = "lastname")
-    @Size(min = 2, message = "Фамилия должна содержать как минимум 2 символа.")
-    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Фамилия не должна содержать цифры, пробелы, спецсимволы")
+    //@Size(min = 2, message = "Фамилия должна содержать как минимум 2 символа.")
+    //@Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Фамилия не должна содержать цифры, пробелы, спецсимволы")
     private String lastName;
 
     @Column(name = "email")
-    @Email
+   // @Email
     private String email;
 
-    @Size(min = 2, message = "Не меньше 5 знаков")
+    //@Size(min = 2, message = "Не меньше 5 знаков")
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create user</title>
@@ -22,7 +22,7 @@
         label {
             display: block;
             margin-top: 16px;
-            color: #292929;
+            color: #ffffff;
         }
 
         input[type="text"], input[type="number"] {
@@ -77,17 +77,29 @@
         <input type="hidden" th:field="*{id}"/>
         <label for="name">Имя:</label>
         <input type="text" id="name" th:field="*{name}" required/>
-        <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Ошибка в имени</div>
         <label for="lastName">Фамилия:</label>
         <input type="text" id="lastName" th:field="*{lastName}" required/>
-        <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</div>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Ошибка в фамилии</div>
         <label for="email">Почта:</label>
         <input type="text" id="email" th:field="*{email}" required/>
-        <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</div>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Ошибка в почте</div>
+        <label for="username">Логин:</label>
+        <input type="text" id="username" th:field="*{username}" required/>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Ошибка в логине</div>
+        <label for="password">Пароль:</label>
+        <input type="text" id="password" th:field="*{password}" required/>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Ошибка в пароле</div>
+        <label for="role">Роль:</label>
+        <select id="role" name="role" th:field="*{roles}">
+            <option value="">Выберите роль</option>
+            <option th:each="role : ${user_roles}" th:value="${role.id}" th:text="${role.name}"></option>
+        </select>
 
+            <input type="submit" value="Сохранить пользователя" class="button create-button">
 
-
-            <input type="submit" value="Create User" class="button create-button">
+        <input type="button" value="Выйти" class="button logout-button" style="float: right;"
+               onclick="window.location.href = '/logout'"/>
     </form>
 </div>
 </body>
