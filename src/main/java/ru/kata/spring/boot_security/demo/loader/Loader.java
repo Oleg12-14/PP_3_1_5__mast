@@ -41,9 +41,6 @@ public class Loader implements CommandLineRunner {
 
 
         userService.saveUser(admin);
-        userService.saveUser(malik);
-        userService.saveUser(olya);
-        userService.saveUser(ivan);
-        userService.saveUser(user);
+
     }
 }
