@@ -36,46 +36,32 @@ public class AdminController {
         return "user-create";
     }
 
-
-//    @PostMapping("/user-create")
-//    public String addUser(@ModelAttribute("user") User user, @RequestParam("role") Long roleId) {
-//        Role role = roleService.findRoleById(roleId);
-//        Set<Role> roles = new HashSet<>();
-//        roles.add(role);
-//        user.setRoles(roles);
-//        userService.saveUser(user);
-//        return "redirect:/admin";
-//    }
-
     @PostMapping("/user-create")
     public String addUser(User user) {
         userService.saveUser(user);
         return "redirect:/admin";
     }
 
-    @GetMapping("/edit-user/{id}")
+    @PatchMapping("/edit-user/{id}")
     public String editUserForm(@PathVariable("id") Long id, Model model) {
         User user = userService.findUserById(id);
         model.addAttribute("user_roles", roleService.allRoles());
-        model.addAttribute("currentUser", user);
+        model.addAttribute("user", user);
         return "edit-user";
     }
 
-    @PostMapping("/edit-user")
-    public String editUser(User user) {
+    @PatchMapping(value = "/edit-user")
+    public String updateUser(@ModelAttribute("user") User user) {
+//        if (user.getPassword() == null || user.getRoles() == null ){
+//            user.setPassword(userService.findUserById(user.getId()).getPassword());
+//            user.setRoles(userService.findUserById(user.getId()).getRoles());
+//        }
         userService.saveUser(user);
         return "redirect:/admin";
     }
 
-    @GetMapping("/delete-user/{id}")
-    public String deleteUserForm(@PathVariable("id") Long id, Model model) {
-        User user = userService.findUserById(id);
-        model.addAttribute("currentUser", user);
-        return "delete-user";
-    }
-
-    @PostMapping("/delete-user/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
+    @PostMapping("/deleteUser")
+    public String deleteUser(@RequestParam("userId") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }

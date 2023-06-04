@@ -96,7 +96,7 @@
             <option th:each="role : ${user_roles}" th:selected="${role.getName()}" th:value="${role.getId()}" th:text="${role.getName()}"></option>
         </select>
 
-            <input type="submit" value="Сохранить пользователя" class="button create-button">
+            <input type="submit" value="Сохранить пользователя" class="btn btn-outline-success my-2 my-sm-0 update-button">
 
         <input type="button" value="Выйти" class="button logout-button" style="float: right;"
                onclick="window.location.href = '/logout'"/>

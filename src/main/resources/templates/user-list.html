@@ -102,12 +102,11 @@
         <td th:text="${user.email}"></td>
         <td th:text="${user.getRolesString()}"></td>
         <td>
-            <form th:method="PATCH" th:action="@{/edit-user}" th:url="edit-user" style="display: inline-block;">
+            <form th:method="PATCH" th:action="@{/edit-user}" th:url="updateButton" style="display: inline-block;">
                 <input type="hidden" name="userId" th:value="${user.id}"/>
                 <input type="submit" class="update-button" value="Изменить"
-                       onclick="window.location.href = '${edit-user}'"/>
+                       onclick="window.location.href = '${updateButton}'"/>
             </form>
-
         </td>
         <td>
             <form th:method="DELETE" th:action="@{/deleteUser}" th:url="deleteButton" style="display: inline-block;">

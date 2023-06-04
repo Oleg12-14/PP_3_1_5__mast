@@ -73,8 +73,8 @@
 
 <body>
 <div>
-    <h2>Новый Пользователь</h2>
-    <form action="#" th:action="@{/edit-user}" th:object="${currentUser}" method="post">
+    <h2>Пользователь</h2>
+    <form action="#" th:action="@{/edit-user/{id}(id=${user.getId()})}" th:object="${user}" method="POST">
         <label for="id">ID</label>
         <input readonly type="number" th:field="*{id}" th:value="*{getId()}" class="create-button" id="id"
                placeholder="ID"/>
@@ -104,9 +104,7 @@
         <label for="role">Роль:</label>
         <select id="role" name="role" th:field="*{roles}">
             <option value="">Выберите роль</option>
-            <option th:each="role : ${user_roles}" th:selected="${role.getName()}" th:utext="${role.getName()}"
-                    th:value="${role.getId()}"
-                    th:text="${role.getName()}"></option>
+            <option th:each="role : ${user_roles}" th:selected="${role.getName()}" th:value="${role.getId()}" th:text="${role.getName()}"></option>
         </select>
 
         <input type="submit" value="Сохранить пользователя" class="button create-button">
