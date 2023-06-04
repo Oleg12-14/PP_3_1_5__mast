@@ -90,7 +90,9 @@
         <label for="department">Отдел:</label>
         <input type="text" id="department" th:field="*{department}" th:value="*{department}" class="create-button"
                placeholder="Почта пользователя"/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('department')}" th:errors="*{department}">Ошибка в отделе</div>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('department')}" th:errors="*{department}">Ошибка в
+            отделе
+        </div>
         <label for="salary">З/П:</label>
         <input type="number" id="salary" th:field="*{salary}" th:value="*{salary}" class="create-button"
                placeholder="Почта пользователя"/>

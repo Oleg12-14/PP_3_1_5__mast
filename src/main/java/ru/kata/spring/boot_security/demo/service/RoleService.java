@@ -22,10 +22,12 @@ public class RoleService {
     public List<Role> allRoles() {
         return roleRepository.findAll();
     }
+
     @Transactional
     public void saveRole(Role role) {
         roleRepository.save(role);
     }
+
     @Transactional
     public Role findRoleById(Long id) {
         Optional<Role> role = roleRepository.findById(id);

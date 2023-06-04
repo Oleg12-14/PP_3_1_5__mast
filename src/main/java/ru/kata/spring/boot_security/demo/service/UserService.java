@@ -42,11 +42,13 @@ public class UserService implements UserDetailsService {
                 orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
     }
+
     @Transactional
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
         return userFromDb.orElse(new User());
     }
+
     @Transactional
     public List<User> allUsers() {
         return userRepository.findAll();

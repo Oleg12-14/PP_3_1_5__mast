@@ -1,12 +1,10 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -23,7 +21,6 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-
 
 
     @Column(name = "name")
@@ -44,7 +41,7 @@ public class User implements UserDetails {
     private int salary;
 
     @Column(name = "username", unique = true)
-    @Size(min=2, message = "Не меньше 5 знаков")
+    @Size(min = 2, message = "Не меньше 5 знаков")
     @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Логин не должен содержать цифры, пробелы, спецсимволы")
     private String username;
 
@@ -57,7 +54,8 @@ public class User implements UserDetails {
     private Set<Role> role;
 
 
-    public User() {}
+    public User() {
+    }
 
     public User(String name, String surname, String department, int salary, String username, String password, Set<Role> role) {
         this.name = name;
