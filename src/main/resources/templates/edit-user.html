@@ -14,6 +14,7 @@
             width: 300px;
             margin: 0 auto;
         }
+
         h2 {
             text-shadow: -2px 2px 1px #660066;
             text-align: center
@@ -73,30 +74,42 @@
 <body>
 <div>
     <h2>Новый Пользователь</h2>
-    <form action="#" th:action="@{/user-create}" th:object="${user}" method="post">
-        <input type="hidden" th:field="*{id}"/>
+    <form action="#" th:action="@{/edit-user}" th:object="${currentUser}" method="post">
+        <label for="id">ID</label>
+        <input readonly type="number" th:field="*{id}" th:value="*{getId()}" class="create-button" id="id"
+               placeholder="ID"/>
         <label for="name">Имя:</label>
-        <input type="text" id="name" th:field="*{name}" required/>
+        <input type="text" th:field="*{name}" th:value="*{getName()}" class="create-button" id="name"
+               placeholder="Имя пользователя"/>
         <div style="color:#FF00FF" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Ошибка в имени</div>
         <label for="lastName">Фамилия:</label>
-        <input type="text" id="lastName" th:field="*{lastName}" required/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Ошибка в фамилии</div>
+        <input type="text" id="lastName" th:field="*{lastName}" th:value="*{getLastName()}" class="create-button"
+               placeholder="Фамилия пользователя"/>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Ошибка в фамилии
+        </div>
         <label for="email">Почта:</label>
-        <input type="text" id="email" th:field="*{email}" required/>
+        <input type="text" id="email" th:field="*{email}" th:value="*{getEmail()}" class="create-button"
+               placeholder="Почта пользователя"/>
         <div style="color:#FF00FF" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Ошибка в почте</div>
         <label for="username">Логин:</label>
-        <input type="text" id="username" th:field="*{username}" required/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Ошибка в логине</div>
+        <input type="text" id="username" th:field="*{username}" th:value="*{getUsername()}" class="create-button"
+               placeholder="Логин пользователя"/>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Ошибка в логине
+        </div>
         <label for="password">Пароль:</label>
-        <input type="password" id="password" th:field="*{password}" required/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Ошибка в пароле</div>
+        <input type="password" id="password" th:field="*{password}" th:value="*{getPassword()}" class="create-button"
+               placeholder="Пароль пользователя"/>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Ошибка в пароле
+        </div>
         <label for="role">Роль:</label>
         <select id="role" name="role" th:field="*{roles}">
             <option value="">Выберите роль</option>
-            <option th:each="role : ${user_roles}" th:selected="${role.getName()}" th:value="${role.getId()}" th:text="${role.getName()}"></option>
+            <option th:each="role : ${user_roles}" th:selected="${role.getName()}" th:utext="${role.getName()}"
+                    th:value="${role.getId()}"
+                    th:text="${role.getName()}"></option>
         </select>
 
-            <input type="submit" value="Сохранить пользователя" class="button create-button">
+        <input type="submit" value="Сохранить пользователя" class="button create-button">
 
         <input type="button" value="Выйти" class="button logout-button" style="float: right;"
                onclick="window.location.href = '/logout'"/>

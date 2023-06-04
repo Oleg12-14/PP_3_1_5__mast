@@ -28,10 +28,17 @@ public class Loader implements CommandLineRunner {
         roleService.saveRole(adminRole);
         roleService.saveRole(userRole);
 
-        User admin = new User("admin", "Admin", "Adminov", "admin@mail.com", "admin", Collections.singleton(adminRole));
-        User user = new User("user", "User", "Userov", "user@mail.com", "user", Collections.singleton(userRole));
+        User admin = new User("admin", "Erik", "BigBoss", "admin@mail.com", "admin", Collections.singleton(adminRole));
+        User user = new User("user", "Malik", "Tregulov", "user@mail.com", "user", Collections.singleton(userRole));
+        User user2 = new User("user2", "Ivan", "Milfochka", "ivan@mail.com", "user2", Collections.singleton(userRole));
+        User admin2 = new User("admin2", "Olya", "LittleBoss", "olya@mail.com", "admin2", Collections.singleton(adminRole));
+        User user3 = new User("user3", "Konstantin", "KonstSave", "konst@mail.com", "user3", Collections.singleton(userRole));
+
 
         userService.saveUser(admin);
         userService.saveUser(user);
+        userService.saveUser(user2);
+        userService.saveUser(admin2);
+        userService.saveUser(user3);
     }
 }
