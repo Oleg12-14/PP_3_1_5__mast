@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 
@@ -17,13 +18,15 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
+    @Transactional
     public List<Role> allRoles() {
         return roleRepository.findAll();
     }
-
+    @Transactional
     public void saveRole(Role role) {
         roleRepository.save(role);
     }
+    @Transactional
     public Role findRoleById(Long id) {
         Optional<Role> role = roleRepository.findById(id);
         if (role.isPresent()) {

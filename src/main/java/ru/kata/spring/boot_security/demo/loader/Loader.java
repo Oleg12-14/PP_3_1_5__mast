@@ -28,17 +28,22 @@ public class Loader implements CommandLineRunner {
         roleService.saveRole(adminRole);
         roleService.saveRole(userRole);
 
-        User admin = new User("admin", "Erik", "BigBoss", "admin@mail.com", "admin", Collections.singleton(adminRole));
-        User user = new User("user", "Malik", "Tregulov", "user@mail.com", "user", Collections.singleton(userRole));
-        User user2 = new User("user2", "Ivan", "Milfochka", "ivan@mail.com", "user2", Collections.singleton(userRole));
-        User admin2 = new User("admin2", "Olya", "LittleBoss", "olya@mail.com", "admin2", Collections.singleton(adminRole));
-        User user3 = new User("user3", "Konstantin", "KonstSave", "konst@mail.com", "user3", Collections.singleton(userRole));
+        User admin = new User("Erik", "Shaydulin", "IT", 450, "admin",
+                "admin", Collections.singleton(adminRole));
+        User user = new User("Malik", "Bakhriddinov", "IT", 350, "user",
+                "user", Collections.singleton(userRole));
+        User malik = new User("Malik", "Tregulov", "IT", 250, "malik",
+                "user", Collections.singleton(userRole));
+        User olya = new User("Olya", "SmallBoss", "IT", 400, "olya",
+                "user", Collections.singleton(adminRole));
+        User ivan = new User("Ivan", "Milf", "IT", 250, "ivan",
+                "user", Collections.singleton(userRole));
 
 
         userService.saveUser(admin);
+        userService.saveUser(malik);
+        userService.saveUser(olya);
+        userService.saveUser(ivan);
         userService.saveUser(user);
-        userService.saveUser(user2);
-        userService.saveUser(admin2);
-        userService.saveUser(user3);
     }
 }

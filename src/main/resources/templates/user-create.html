@@ -67,6 +67,12 @@
         .button:hover {
             background-color: #993399;
         }
+
+        .errors {
+            color: red;
+        }
+
+
     </style>
 </head>
 
@@ -77,26 +83,32 @@
         <input type="hidden" th:field="*{id}"/>
         <label for="name">Имя:</label>
         <input type="text" id="name" th:field="*{name}" required/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Ошибка в имени</div>
-        <label for="lastName">Фамилия:</label>
-        <input type="text" id="lastName" th:field="*{lastName}" required/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Ошибка в фамилии</div>
-        <label for="email">Почта:</label>
-        <input type="text" id="email" th:field="*{email}" required/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Ошибка в почте</div>
+        <div class="errors" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Ошибка в имени</div>
+        <label for="surname">Фамилия:</label>
+        <input type="text" id="surname" th:field="*{surname}" required/>
+        <div class="errors" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Ошибка в фамилии</div>
+        <label for="department">Отдел:</label>
+        <input type="text" id="department" th:field="*{department}" required/>
+        <div class="errors" th:if="${#fields.hasErrors('department')}" th:errors="*{department}">Ошибка в отделе</div>
+        <label for="salary">З/П:</label>
+        <input type="number" id="salary" th:field="*{salary}" required/>
+        <div class="errors" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Ошибка в ЗП</div>
         <label for="username">Логин:</label>
         <input type="text" id="username" th:field="*{username}" required/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Ошибка в логине</div>
+        <div class="errors" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Ошибка в логине</div>
         <label for="password">Пароль:</label>
         <input type="password" id="password" th:field="*{password}" required/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Ошибка в пароле</div>
+        <div class="errors" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Ошибка в пароле</div>
         <label for="role">Роль:</label>
-        <select id="role" name="role" th:field="*{roles}">
+        <select id="role" name="role" th:field="*{role}" multiple="multiple">
             <option value="">Выберите роль</option>
-            <option th:each="role : ${user_roles}" th:selected="${role.getName()}" th:value="${role.getId()}" th:text="${role.getName()}"></option>
-        </select>
+            <option th:each="role : ${user_roles}"
 
-            <input type="submit" value="Сохранить пользователя" class="btn btn-outline-success my-2 my-sm-0 update-button">
+                    th:value="${role.getId()}"
+                    th:text="${role.getName()}"></option>
+        </select>
+        <!--                    th:selected="${role.getName()}"-->
+        <input type="submit" value="Сохранить пользователя" class="btn btn-outline-success my-2 my-sm-0 update-button">
 
         <input type="button" value="Выйти" class="button logout-button" style="float: right;"
                onclick="window.location.href = '/logout'"/>

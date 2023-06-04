@@ -74,39 +74,46 @@
 <body>
 <div>
     <h2>Пользователь</h2>
-    <form action="#" th:action="@{/edit-user/{id}(id=${user.getId()})}" th:object="${user}" method="POST">
+    <form action="#" th:action="@{/userUpd}" th:object="${user}" th:method="PATCH">
         <label for="id">ID</label>
-        <input readonly type="number" th:field="*{id}" th:value="*{getId()}" class="create-button" id="id"
+        <input readonly type="number" th:field="*{id}" th:value="*{id}" class="create-button" id="id"
                placeholder="ID"/>
         <label for="name">Имя:</label>
-        <input type="text" th:field="*{name}" th:value="*{getName()}" class="create-button" id="name"
+        <input type="text" th:field="*{name}" th:value="*{name}" class="create-button" id="name"
                placeholder="Имя пользователя"/>
         <div style="color:#FF00FF" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Ошибка в имени</div>
-        <label for="lastName">Фамилия:</label>
-        <input type="text" id="lastName" th:field="*{lastName}" th:value="*{getLastName()}" class="create-button"
+        <label for="surname">Фамилия:</label>
+        <input type="text" id="surname" th:field="*{surname}" th:value="*{surname}" class="create-button"
                placeholder="Фамилия пользователя"/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Ошибка в фамилии
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Ошибка в фамилии
         </div>
-        <label for="email">Почта:</label>
-        <input type="text" id="email" th:field="*{email}" th:value="*{getEmail()}" class="create-button"
+        <label for="department">Отдел:</label>
+        <input type="text" id="department" th:field="*{department}" th:value="*{department}" class="create-button"
                placeholder="Почта пользователя"/>
-        <div style="color:#FF00FF" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Ошибка в почте</div>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('department')}" th:errors="*{department}">Ошибка в отделе</div>
+        <label for="salary">З/П:</label>
+        <input type="number" id="salary" th:field="*{salary}" th:value="*{salary}" class="create-button"
+               placeholder="Почта пользователя"/>
+        <div style="color:#FF00FF" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Ошибка в ЗП</div>
         <label for="username">Логин:</label>
-        <input type="text" id="username" th:field="*{username}" th:value="*{getUsername()}" class="create-button"
+        <input type="text" id="username" th:field="*{username}" class="create-button"
                placeholder="Логин пользователя"/>
         <div style="color:#FF00FF" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Ошибка в логине
         </div>
         <label for="password">Пароль:</label>
-        <input type="password" id="password" th:field="*{password}" th:value="*{getPassword()}" class="create-button"
+        <input type="password" id="password" th:field="*{password}" th:value="*{password}" class="create-button"
                placeholder="Пароль пользователя"/>
         <div style="color:#FF00FF" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Ошибка в пароле
         </div>
         <label for="role">Роль:</label>
-        <select id="role" name="role" th:field="*{roles}">
+        <select id="role" name="role" th:field="*{role}" multiple="multiple">
             <option value="">Выберите роль</option>
-            <option th:each="role : ${user_roles}" th:selected="${role.getName()}" th:value="${role.getId()}" th:text="${role.getName()}"></option>
-        </select>
+            <option th:each="role : ${user_roles}"
 
+                    th:value="${role.getId()}"
+                    th:text="${role.getName()}"></option>
+        </select>
+        <!--                    th:selected="${role.getName()}"-->
         <input type="submit" value="Сохранить пользователя" class="button create-button">
 
         <input type="button" value="Выйти" class="button logout-button" style="float: right;"
