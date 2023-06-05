@@ -1,77 +1,82 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
 
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
+
 @Controller
-@RequestMapping
+@RequestMapping("/admin")
 public class AdminController {
+
     private final UserService userService;
-    private final RoleService roleService;
 
-
-    public AdminController(UserService userService, RoleService roleService) {
+    @Autowired
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
-    @GetMapping(value = "/admin")
-    public String userList(Model model, Principal principal) {
-        List<User> allUsers = userService.allUsers();
-        model.addAttribute("users", allUsers);
-        model.addAttribute("user_roles", roleService.allRoles());
-        model.addAttribute("currentUser", userService.loadUserByUsername(principal.getName()));
-        return "user-list";
+    @ModelAttribute("userForHeader") // Добавляем атрибут userForHeader в модель для каждого запроса
+    public User userForHeader(Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            return userService.findByUsername(username);
+        }
+        return null;
     }
 
-    @GetMapping("/addNewUser")
-    public String addUserForm(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("user_roles", roleService.allRoles());
-        return "user-create";
+
+    @GetMapping("/api/users")
+    @ResponseBody
+    public List<User> getAllUsers() {
+        return userService.allUsers();
     }
 
-    @PostMapping("/user-create")
-    public String addUser(@Valid @ModelAttribute User user, BindingResult bindingResult, Model model) {
+
+    @GetMapping()
+    public String showAllUsers(Model model) {
+        model.addAttribute("allUsers", userService.allUsers());
+        model.addAttribute("users", userService.allUsers());
+        model.addAttribute("listRoles", userService.listRoles());
+        model.addAttribute("newUser", new User());
+        return "all-users";
+    }
+
+
+    @PostMapping("/saveUser")
+    public String saveUser(@Valid @ModelAttribute("newUser") User newUser, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("user_roles", roleService.allRoles());
-            return "user-create";
+            model.addAttribute("newUser", newUser);
+            model.addAttribute("bindingResult", bindingResult);
+
+            return "all-users";
         }
-        userService.saveUser(user);
-        return "redirect:/admin";
-    }
-
-    @PatchMapping("/userUpdate")
-    public String editUserForm(@RequestParam("userId") Long id, Model model) {
-        User user = userService.findUserById(id);
-        model.addAttribute("user", user);
-        model.addAttribute("user_roles", roleService.allRoles());
-
-        return "edit-user";
-    }
-
-    @PatchMapping(value = "/userUpd")
-    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
-        if (!userService.updateUser(user, bindingResult)) {
-            model.addAttribute("user_roles", roleService.allRoles());
-            return "edit-user";
-        }
+        userService.saveUser(newUser);
 
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/deleteUser")
-    public String deleteUser(@RequestParam("userId") Long id) {
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/admin";
+        }
+        userService.updateUser(user);
+        return "redirect:/admin";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
