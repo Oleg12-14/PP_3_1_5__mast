@@ -11,9 +11,12 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
+import ru.kata.spring.boot_security.demo.util.UserNotFoundException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -31,6 +34,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
 
@@ -41,13 +45,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return user;
     }
 
-
+    @Transactional(readOnly = true)
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new User());
+        return userFromDb.orElseThrow(UserNotFoundException::new);
     }
 
-
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -74,17 +78,18 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return true;
     }
 
-
-    public List<Role> getListRoles() {
-        return roleRepository.findAll();
+    @Transactional(readOnly = true)
+    public Set<Role> getListRoles() {
+        List<Role> list = roleRepository.findAll();
+        return new HashSet<>(list);
     }
 
-
+    @Transactional(readOnly = true)
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-
+    @Transactional(readOnly = true)
     public User getUserByUsername(String name) {
         return userRepository.findByUsername(name);
     }

@@ -5,6 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -17,28 +20,40 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Size(min = 2, message = "Имя должно содержать как минимум 2 символа.")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Имя не должно содержать цифры, пробелы, спецсимволы")
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-
-    @Column(nullable = false, length = 50)
+    @Size(min = 2, message = "Фамилия должна содержать как минимум 2 символа.")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Фамилия не должно содержать цифры, пробелы, спецсимволы")
+    @Column(name = "surname", nullable = false, length = 50)
     private String surname;
 
+    @Column(name = "department")
     private String department;
 
-
+    @Min(value = 0, message = "Зарплата должна быть не меньше 0")
+    @Column(name = "salary")
     private int salary;
-    @Column(unique = true)
+
+    @Size(min = 2, message = "Логин должен содержать минимум 2 символа.")
+    @Pattern(regexp = "^[a-zA-Zа-яА-Я]+$", message = "Логин не должен содержать цифры, пробелы, спецсимволы")
+    @Column(unique = true, name = "username")
     private String username;
 
+    @Size(min = 2, message = "Пароль должен содержать минимум 2 символа.")
+    @Column(name = "password")
     private String password;
+
     @ManyToMany
     @JoinTable(name = "users_roles"
             , joinColumns = @JoinColumn(name = "user_id")
             , inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public User() {}
 

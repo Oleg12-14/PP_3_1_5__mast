@@ -4,20 +4,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
-import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
-
+import ru.kata.spring.boot_security.demo.service.RoleService;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.Collections;
 
 @Component
 public class Loader implements CommandLineRunner {
-    private final UserServiceImpl userServiceImpl;
-    private final RoleServiceImpl roleServiceImpl;
+    private final UserService userService;
+    private final RoleService roleService;
 
-    public Loader(UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
-        this.roleServiceImpl = roleServiceImpl;
+    public Loader(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
     }
 
     @Override
@@ -25,8 +24,8 @@ public class Loader implements CommandLineRunner {
         Role adminRole = new Role("ROLE_ADMIN");
         Role userRole = new Role("ROLE_USER");
 
-        roleServiceImpl.saveRole(adminRole);
-        roleServiceImpl.saveRole(userRole);
+        roleService.saveRole(adminRole);
+        roleService.saveRole(userRole);
 
         User admin = new User("Erik", "BigBoss", "IT", 450, "admin",
                 "admin", Collections.singleton(adminRole));
@@ -40,11 +39,11 @@ public class Loader implements CommandLineRunner {
                 "user", Collections.singleton(userRole));
 
 
-        userServiceImpl.saveUser(admin);
-        userServiceImpl.saveUser(malik);
-        userServiceImpl.saveUser(olya);
-        userServiceImpl.saveUser(ivan);
-        userServiceImpl.saveUser(user);
+        userService.saveUser(admin);
+        userService.saveUser(malik);
+        userService.saveUser(olya);
+        userService.saveUser(ivan);
+        userService.saveUser(user);
 
     }
 }

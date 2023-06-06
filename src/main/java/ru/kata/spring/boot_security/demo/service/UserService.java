@@ -4,8 +4,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
-
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
     UserDetails loadUserByUsername(String username);
@@ -14,6 +14,8 @@ public interface UserService {
     void saveUser(User user);
     boolean updateUser(User user);
     boolean deleteUser(Long userId);
+    Set<Role> getListRoles();
     User findByUsername(String username);
-    List<Role> getListRoles();
+    User getUserByUsername(String name);
+
 }
