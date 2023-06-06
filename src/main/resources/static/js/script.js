@@ -2,11 +2,11 @@ let URL = "http://localhost:8080/admin/users";
 const roleUrl = 'http://localhost:8080/admin/roles';
 const authUserUrl = 'http://localhost:8080/currentUser'
 
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajax({
         url: authUserUrl,
         type: 'GET',
-        success: function(user) {
+        success: function (user) {
             $('.username').text(user.name);
             $('.surname').text(user.surname);
             let roles = user.roles.map(function (role) {
@@ -14,38 +14,38 @@ $(document).ready(function() {
             });
             $('.role').text(roles.join(' '));
         },
-        error: function() {
+        error: function () {
             console.log('Error getting current user');
         }
     });
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajax({
         url: authUserUrl,
         type: 'GET',
-        success: function(user) {
+        success: function (user) {
             $('.id').text(user.id);
             $('.name').text(user.name);
             $('.surname').text(user.surname);
             $('.department').text(user.department);
-            let roles = user.roles.map(function(role) {
+            let roles = user.roles.map(function (role) {
                 return role.name === 'ROLE_ADMIN' ? 'ADMIN' : 'USER';
             });
             $('.roles').text(roles.join(', '));
         },
-        error: function() {
+        error: function () {
             console.log('Error getting current user');
         }
     });
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajax({
         url: authUserUrl,
         type: 'GET',
-        success: function(user) {
-            let isAdmin = user.roles.some(function(role) {
+        success: function (user) {
+            let isAdmin = user.roles.some(function (role) {
                 return role.name === 'ROLE_ADMIN';
             });
             console.log(isAdmin); // отладочный вывод
@@ -55,21 +55,19 @@ $(document).ready(function() {
                 $('#adminMenuItem').hide();
             }
         },
-        error: function() {
+        error: function () {
             console.log('Error getting current user');
         }
     });
 });
 
 
-
-
 // получаем роли с сервера
 const selectRoleForm = $('#roles');
 
-$.get(roleUrl, function(data) {
+$.get(roleUrl, function (data) {
     let options = '';
-    $.each(data, function(key, value) {
+    $.each(data, function (key, value) {
         options += `<option value="${Number(key) + 1}">${value.name}</option>`;
     });
     selectRoleForm.html(options);
@@ -125,16 +123,15 @@ const renderTable = (users) => {
     userTable.html(tableContent); // Устанавливаем строку с содержимым таблицы
 };
 
-$.get(URL, function(data) {
+$.get(URL, function (data) {
     renderTable(data);
 });
 
 
-
 // Заполнение форм Edit и Delete
-userTable.on('click', '#editbtn', function() {
+userTable.on('click', '#editbtn', function () {
     let userId = $(this).data('id');
-    $.get(`${URL}/${userId}`, function(data) {
+    $.get(`${URL}/${userId}`, function (data) {
         $("#idEdit").val(data.id);
         $("#nameEdit").val(data.name);
         $("#surnameEdit").val(data.surname);
@@ -143,9 +140,9 @@ userTable.on('click', '#editbtn', function() {
         $("#usernameEdit").val(data.username);
         $("#pass").val(data.password);
 
-        $.get(roleUrl, function(rolesData) {
+        $.get(roleUrl, function (rolesData) {
             let options = '';
-            $.each(rolesData, function(id, name) {
+            $.each(rolesData, function (id, name) {
                 const selected = data.roles.some(role => role.id === Number(id)) ? 'selected' : '';
                 options += `<option value="${Number(id) + 1}" ${selected}>${name.name}</option>`;
             });
@@ -156,9 +153,9 @@ userTable.on('click', '#editbtn', function() {
     });
 });
 
-userTable.on('click', '#delbtn', function() {
+userTable.on('click', '#delbtn', function () {
     let userId = $(this).data('id');
-    $.get(`${URL}/${userId}`, function(data) {
+    $.get(`${URL}/${userId}`, function (data) {
         let roles = '';
         data.roles.forEach(role => roles += role.name + " ");
         $("#idDelete").val(data.id);
@@ -177,7 +174,7 @@ userTable.on('click', '#delbtn', function() {
 let modalFormEdit = $('#editModalForm');
 let roleEdit = $('#rolesEdit');
 
-modalFormEdit.submit(function(e) {
+modalFormEdit.submit(function (e) {
     e.preventDefault();
 
     $('#nameEditError').text('');
@@ -187,7 +184,7 @@ modalFormEdit.submit(function(e) {
     $('#passwordEditError').text('');
 
     const rol = [];
-    $('#rolesEdit option:selected').each(function() {
+    $('#rolesEdit option:selected').each(function () {
         rol.push({
             id: $(this).val(),
             name: $(this).text()
@@ -210,14 +207,14 @@ modalFormEdit.submit(function(e) {
         type: 'PATCH',
         data: JSON.stringify(user),
         contentType: 'application/json',
-        success: function() {
+        success: function () {
             $('#editModal').modal('hide');
             outputUser = '';
-            $.get(URL, function(data) {
+            $.get(URL, function (data) {
                 renderTable(data);
             });
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             // обработка ошибки
             if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
                 const errors = jqXHR.responseJSON.message.split(';');
@@ -231,22 +228,20 @@ modalFormEdit.submit(function(e) {
 });
 
 
-
-
 // Удаление юзера
 let modalFormDelete = $('#deleteModalForm');
 
-modalFormDelete.submit(function(e) {
+modalFormDelete.submit(function (e) {
     e.preventDefault();
     let userId = $("#idDelete").val();
 
     $.ajax({
         url: `${URL}/${userId}`,
         type: 'DELETE',
-        success: function() {
+        success: function () {
             $('#deleteModal').modal('hide');
             outputUser = '';
-            $.get(URL, function(data) {
+            $.get(URL, function (data) {
                 renderTable(data);
             });
         }
@@ -254,12 +249,11 @@ modalFormDelete.submit(function(e) {
 });
 
 
-
 // Добавление юзера
 
 let userFormNew = $("#newUserForm");
 
-userFormNew.submit(function(e) {
+userFormNew.submit(function (e) {
     e.preventDefault();
 
     $('#nameEditError').text('');
@@ -269,7 +263,7 @@ userFormNew.submit(function(e) {
     $('#passwordEditError').text('');
 
     const roles = [];
-    $('#roles option:selected').each(function() {
+    $('#roles option:selected').each(function () {
         roles.push({
             id: $(this).val(),
             name: $(this).text()
@@ -291,14 +285,14 @@ userFormNew.submit(function(e) {
         type: 'POST',
         data: JSON.stringify(user),
         contentType: 'application/json',
-        success: function(data) {
+        success: function (data) {
             $('#listUsers-tab').tab('show');
             userFormNew[0].reset();
-            $.get(URL, function(data) {
+            $.get(URL, function (data) {
                 renderTable(data);
             });
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             // обработка ошибки
             if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
                 const errors = jqXHR.responseJSON.message.split(';');

@@ -21,11 +21,12 @@ public class Loader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Role adminRole = new Role("ROLE_ADMIN");
         Role userRole = new Role("ROLE_USER");
+        Role adminRole = new Role("ROLE_ADMIN");
 
-        roleService.saveRole(adminRole);
+
         roleService.saveRole(userRole);
+        roleService.saveRole(adminRole);
 
         User admin = new User("Erik", "BigBoss", "IT", 450, "admin",
                 "admin", Collections.singleton(adminRole));

@@ -9,13 +9,21 @@ import java.util.Set;
 
 public interface UserService {
     UserDetails loadUserByUsername(String username);
+
     User findUserById(Long userId);
+
     List<User> getAllUsers();
+
     void saveUser(User user);
+
     boolean updateUser(User user);
+
     boolean deleteUser(Long userId);
+
     Set<Role> getListRoles();
+
     User findByUsername(String username);
+
     User getUserByUsername(String name);
 
 }
