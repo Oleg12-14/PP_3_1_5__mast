@@ -17,21 +17,21 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+//    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 50)
+//    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
 
-    @Column(name = "surname", nullable = false, length = 50)
+//    @Column(name = "surname", nullable = false, length = 50)
     private String surname;
 
-    @Column(name = "department")
+//    @Column(name = "department")
     private String department;
 
 
-    @Column(name = "salary")
+//    @Column(name = "salary")
     private int salary;
     @Column(unique = true)
     private String username;
