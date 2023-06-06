@@ -10,10 +10,10 @@ import java.util.List;
 public interface UserService {
     UserDetails loadUserByUsername(String username);
     User findUserById(Long userId);
-    List<User> allUsers();
+    List<User> getAllUsers();
     void saveUser(User user);
     boolean updateUser(User user);
     boolean deleteUser(Long userId);
     User findByUsername(String username);
-    List<Role> listRoles();
+    List<Role> getListRoles();
 }

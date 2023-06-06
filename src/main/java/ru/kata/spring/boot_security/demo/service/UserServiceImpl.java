@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 
     @Override
-    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
 
@@ -42,14 +41,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return user;
     }
 
-    @Transactional(readOnly = true)
+
     public User findUserById(Long userId) {
         Optional<User> userFromDb = userRepository.findById(userId);
         return userFromDb.orElse(new User());
     }
 
-    @Transactional(readOnly = true)
-    public List<User> allUsers() {
+
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
@@ -75,17 +74,17 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return true;
     }
 
-    @Transactional(readOnly = true)
-    public List<Role> listRoles() {
+
+    public List<Role> getListRoles() {
         return roleRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
+
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    @Transactional(readOnly = true)
+
     public User getUserByUsername(String name) {
         return userRepository.findByUsername(name);
     }

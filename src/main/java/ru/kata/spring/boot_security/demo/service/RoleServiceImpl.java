@@ -18,8 +18,8 @@ public class RoleServiceImpl implements RoleService{
         this.roleRepository = roleRepository;
     }
 
-    @Transactional
-    public List<Role> allRoles() {
+
+    public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
@@ -28,7 +28,7 @@ public class RoleServiceImpl implements RoleService{
         roleRepository.save(role);
     }
 
-    @Transactional
+
     public Role findRoleById(Long id) {
         Optional<Role> role = roleRepository.findById(id);
         if (role.isPresent()) {

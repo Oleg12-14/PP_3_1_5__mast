@@ -38,15 +38,15 @@ public class AdminController {
     @GetMapping("/api/users")
     @ResponseBody
     public List<User> getAllUsers() {
-        return userService.allUsers();
+        return userService.getAllUsers();
     }
 
 
     @GetMapping()
     public String showAllUsers(Model model) {
-        model.addAttribute("allUsers", userService.allUsers());
-        model.addAttribute("users", userService.allUsers());
-        model.addAttribute("listRoles", userService.listRoles());
+        model.addAttribute("allUsers", userService.getAllUsers());
+        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("listRoles", userService.getListRoles());
         model.addAttribute("newUser", new User());
         return "all-users";
     }

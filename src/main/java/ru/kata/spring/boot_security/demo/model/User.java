@@ -17,21 +17,18 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id")
     private Long id;
 
-//    @Column(name = "name", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String name;
 
 
-//    @Column(name = "surname", nullable = false, length = 50)
+    @Column(nullable = false, length = 50)
     private String surname;
 
-//    @Column(name = "department")
     private String department;
 
 
-//    @Column(name = "salary")
     private int salary;
     @Column(unique = true)
     private String username;
@@ -41,7 +38,7 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles"
             , joinColumns = @JoinColumn(name = "user_id")
             , inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles;
 
     public User() {}
 
